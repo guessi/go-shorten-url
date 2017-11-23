@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  shortenurl:
+    image: guessi/go-shorten-url
+    volumes:
+        - ./config:/opt/config:ro
+    ports:
+        - 8080:8080
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: "30"
+    privileged: true
