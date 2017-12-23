@@ -88,7 +88,7 @@ func getRedirection(config []byte, query string, user_agent string) (int, string
 	if err != nil {
 		r2, err := jsonparser.GetString(config, query, "default")
 		if err != nil {
-			r3, _ := jsonparser.GetString(config, "__fallback_url")
+			r3, _ := jsonparser.GetString(config, "__fallback_url", "default")
 			return 404, r3
 		}
 		return 302, r2

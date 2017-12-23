@@ -1,6 +1,7 @@
 {
-  "__fallback_url": "https://github.com/guessi/go-shorten-url",
-
+  "__fallback_url": {
+      "default": "https://github.com/guessi/go-shorten-url"
+  },
   "store": {
       "iOS": "https://www.apple.com/ios/app-store",
       "AndroidOS": "https://play.google.com",

@@ -17,6 +17,19 @@ func TestGetRedirection(t *testing.T) {
 	result := ""
 	fallback_url := "https://github.com/guessi/go-shorten-url"
 
+	// fallback_url
+	expected = fallback_url
+	_, result = getRedirection(keywords, "__fallback_url", "default")
+	if expected != result {
+		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	}
+
+	expected = fallback_url
+	_, result = getRedirection(keywords, "__fallback_url", "not-exist")
+	if expected != result {
+		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	}
+
 	// store
 	expected = "https://www.amazon.com"
 	_, result = getRedirection(keywords, "store", "default")
