@@ -9,15 +9,15 @@ a simple shorten url redirection solution with golang
 
 # Prerequisites
 
-- Docker-CE 17.06+
-- Docker Compose 1.16.0+
+- Docker-CE 17.12+
+- Docker Compose 1.21.0+
 
 
 # Usage
 
     $ docker-compose pull # make sure your image is up-to-date
 
-    $ docker-compose up
+    $ docker-compose up [-d]
 
     $ curl http://127.0.0.1:8080/example
 
@@ -27,6 +27,8 @@ a simple shorten url redirection solution with golang
     $ go get -u github.com/guessi/go-shorten-url
 
     $ cd $(GOPATH)/src/github.com/guessi/go-shorten-url
+
+    $ go run main.go --help
 
     $ go run main.go [-p port] [-c config] [--with-fallback-url] [--no-color] [--debug]
 
