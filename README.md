@@ -26,7 +26,7 @@ a simple shorten url redirection solution with golang
 
     $ go get -u github.com/guessi/go-shorten-url
 
-    $ cd $(GOPATH)/src/github.com/guessi/go-shorten-url
+    $ cd ${GOPATH}/src/github.com/guessi/go-shorten-url
 
     $ go run main.go --help
 
