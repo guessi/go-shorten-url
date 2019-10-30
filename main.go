@@ -3,24 +3,33 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 
-	"github.com/Shaked/gomobiledetect"
+	mobiledetect "github.com/Shaked/gomobiledetect"
 	"github.com/buger/jsonparser"
 	"github.com/gin-gonic/gin"
 
 	flag "github.com/spf13/pflag"
 )
 
+const (
+	userAgentDefault   = "default"
+	userAgentIOS       = "iOS"
+	userAgentAndroidOS = "AndroidOS"
+)
+
+var (
+	withfallbackurl *bool   = flag.BoolP("with-fallback-url", "k", false, "enable fallback url feature")
+	nocolor         *bool   = flag.BoolP("no-color", "n", true, "disable color output")
+	debug           *bool   = flag.BoolP("debug", "d", false, "debug mode")
+	help            *bool   = flag.BoolP("help", "h", false, "display help messages")
+	port            *int    = flag.IntP("port", "p", 8080, "port number")
+	config          *string = flag.StringP("config", "c", "config/redirections.json", "redirection rules in json format")
+)
+
 func main() {
 	// parse config options
-	var config *string = flag.StringP("config", "c", "config/redirections.json", "redirection rules in json format")
-	var port *int = flag.IntP("port", "p", 8080, "port number")
-	var withfallbackurl *bool = flag.BoolP("with-fallback-url", "k", false, "enable fallback url feature")
-	var nocolor *bool = flag.BoolP("no-color", "n", true, "disable color output")
-	var debug *bool = flag.BoolP("debug", "d", false, "debug mode")
-	var help *bool = flag.BoolP("help", "h", false, "display help messages")
-
 	flag.Parse()
 
 	// print help messages and exit
@@ -36,13 +45,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	// turn off console color output
 	if *nocolor {
-		// turn off console color output
 		gin.DisableConsoleColor()
 	}
 
+	// reduce console log output
 	if !*debug {
-		// reduce console log output
 		gin.SetMode(gin.ReleaseMode)
 	}
 
@@ -54,28 +63,28 @@ func main() {
 		uri := c.Param("uri")
 
 		// set default user agent string
-		var userAgent = "default"
+		userAgent := userAgentDefault
 
 		// detect and set user agent
 		detect := mobiledetect.NewMobileDetect(c.Request, nil)
 
 		if detect.IsMobile() {
 			if detect.Is("ios") {
-				userAgent = "iOS"
+				userAgent = userAgentIOS
 			} else {
 				// known issue: detect.Is("android") not work as expected
-				userAgent = "AndroidOS"
+				userAgent = userAgentAndroidOS
 			}
 		} else {
-			userAgent = "default"
+			userAgent = userAgentDefault
 		}
 
 		// return redirection
 		rc, rule := getRedirection(keywords, uri, userAgent)
-		if rc != 404 || *withfallbackurl {
-			c.Redirect(302, rule)
+		if rc != http.StatusNotFound || *withfallbackurl {
+			c.Redirect(http.StatusFound, rule)
 		} else {
-			c.String(404, "404 page not found")
+			c.String(http.StatusNotFound, "404 page not found")
 		}
 	})
 
@@ -89,9 +98,9 @@ func getRedirection(config []byte, query string, user_agent string) (int, string
 		r2, err := jsonparser.GetString(config, query, "default")
 		if err != nil {
 			r3, _ := jsonparser.GetString(config, "__fallback_url", "default")
-			return 404, r3
+			return http.StatusNotFound, r3
 		}
-		return 302, r2
+		return http.StatusFound, r2
 	}
-	return 302, r
+	return http.StatusFound, r
 }

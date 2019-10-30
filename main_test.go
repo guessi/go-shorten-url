@@ -5,137 +5,118 @@ import (
 	"testing"
 )
 
-func TestGetRedirection(t *testing.T) {
+var (
+	userAgentUnsupported = "unknown"
+	fallback_url         = "https://github.com/guessi/go-shorten-url"
+)
+
+func runTest(t *testing.T, keywords []byte, keyword, expected, userAgent string) {
+	_, result := getRedirection(keywords, keyword, userAgent)
+	if expected != result {
+		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	}
+}
+
+func TestSuite1(t *testing.T) {
 	// load configuration
 	keywords, err := ioutil.ReadFile("config/redirections.json")
 	if err != nil {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	// initialized
-	expected := ""
-	result := ""
-	fallback_url := "https://github.com/guessi/go-shorten-url"
+	runTest(t, keywords, "__fallback_url", fallback_url, userAgentUnsupported)
+	runTest(t, keywords, "__fallback_url", fallback_url, userAgentDefault)
+	runTest(t, keywords, "__fallback_url", fallback_url, userAgentAndroidOS)
+	runTest(t, keywords, "__fallback_url", fallback_url, userAgentIOS)
+}
 
-	// fallback_url
-	expected = fallback_url
-	_, result = getRedirection(keywords, "__fallback_url", "default")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+func TestSuite2(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	expected = fallback_url
-	_, result = getRedirection(keywords, "__fallback_url", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "store", "https://www.amazon.com", userAgentUnsupported)
+	runTest(t, keywords, "store", "https://www.amazon.com", userAgentDefault)
+	runTest(t, keywords, "store", "https://play.google.com", userAgentAndroidOS)
+	runTest(t, keywords, "store", "https://www.apple.com/ios/app-store", userAgentIOS)
+}
+
+func TestSuite3(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	// store
-	expected = "https://www.amazon.com"
-	_, result = getRedirection(keywords, "store", "default")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "github", "https://github.com", userAgentUnsupported)
+	runTest(t, keywords, "github", "https://github.com", userAgentDefault)
+	runTest(t, keywords, "github", "https://github.com", userAgentAndroidOS)
+	runTest(t, keywords, "github", "https://github.com", userAgentIOS)
+}
+
+func TestSuite4(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	expected = "https://play.google.com"
-	_, result = getRedirection(keywords, "store", "AndroidOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "appleonly", fallback_url, userAgentUnsupported)
+	runTest(t, keywords, "appleonly", fallback_url, userAgentDefault)
+	runTest(t, keywords, "appleonly", fallback_url, userAgentAndroidOS)
+	runTest(t, keywords, "appleonly", "https://www.apple.com", userAgentIOS)
+}
+
+func TestSuite5(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	expected = "https://www.apple.com/ios/app-store"
-	_, result = getRedirection(keywords, "store", "iOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "androidonly", fallback_url, userAgentUnsupported)
+	runTest(t, keywords, "androidonly", fallback_url, userAgentDefault)
+	runTest(t, keywords, "androidonly", "https://source.android.com/", userAgentAndroidOS)
+	runTest(t, keywords, "androidonly", fallback_url, userAgentIOS)
+}
+
+func TestSuite6(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	// github
-	expected = "https://github.com"
-	_, result = getRedirection(keywords, "github", "default")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "nodefault", fallback_url, userAgentUnsupported)
+	runTest(t, keywords, "nodefault", fallback_url, userAgentDefault)
+	runTest(t, keywords, "nodefault", "https://source.android.com/", userAgentAndroidOS)
+	runTest(t, keywords, "nodefault", "https://www.apple.com", userAgentIOS)
+}
+
+func TestSuite7(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	expected = "https://github.com"
-	_, result = getRedirection(keywords, "github", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
+	runTest(t, keywords, "example", "https://www.google.com/", userAgentUnsupported)
+	runTest(t, keywords, "example", "https://www.google.com/", userAgentDefault)
+	runTest(t, keywords, "example", "https://www.google.com/", userAgentAndroidOS)
+	runTest(t, keywords, "example", "https://www.google.com/", userAgentIOS)
+}
+
+func TestSuite8(t *testing.T) {
+	// load configuration
+	keywords, err := ioutil.ReadFile("config/redirections.json")
+	if err != nil {
+		t.Errorf("Failed to open configuration file")
 	}
 
-	// appleonly
-	expected = "https://www.apple.com"
-	_, result = getRedirection(keywords, "appleonly", "iOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = fallback_url
-	_, result = getRedirection(keywords, "appleonly", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	// androidonly
-	expected = "https://source.android.com/"
-	_, result = getRedirection(keywords, "androidonly", "AndroidOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = fallback_url
-	_, result = getRedirection(keywords, "androidonly", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	// nodefault
-	expected = "https://www.apple.com"
-	_, result = getRedirection(keywords, "nodefault", "iOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = "https://source.android.com/"
-	_, result = getRedirection(keywords, "nodefault", "AndroidOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = fallback_url
-	_, result = getRedirection(keywords, "nodefault", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	// example
-	expected = "https://www.google.com/"
-	_, result = getRedirection(keywords, "example", "iOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = "https://www.google.com/"
-	_, result = getRedirection(keywords, "example", "AndroidOS")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = "https://www.google.com/"
-	_, result = getRedirection(keywords, "example", "default")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	expected = "https://www.google.com/"
-	_, result = getRedirection(keywords, "example", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
-
-	// not-exist
-	expected = fallback_url
-	_, result = getRedirection(keywords, "not-exist", "not-exist")
-	if expected != result {
-		t.Errorf("Error, expected: %s, get: %s", expected, result)
-	}
+	runTest(t, keywords, "not-defined", fallback_url, userAgentUnsupported)
+	runTest(t, keywords, "not-defined", fallback_url, userAgentDefault)
+	runTest(t, keywords, "not-defined", fallback_url, userAgentAndroidOS)
+	runTest(t, keywords, "not-defined", fallback_url, userAgentIOS)
 }
