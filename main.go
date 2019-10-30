@@ -92,8 +92,8 @@ func main() {
 	svc.Run(fmt.Sprintf(":%d", *port))
 }
 
-func getRedirection(config []byte, query string, user_agent string) (int, string) {
-	r, err := jsonparser.GetString(config, query, user_agent)
+func getRedirection(config []byte, query string, userAgent string) (int, string) {
+	r, err := jsonparser.GetString(config, query, userAgent)
 	if err != nil {
 		r2, err := jsonparser.GetString(config, query, "default")
 		if err != nil {

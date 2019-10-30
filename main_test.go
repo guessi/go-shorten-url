@@ -7,7 +7,7 @@ import (
 
 var (
 	userAgentUnsupported = "unknown"
-	fallback_url         = "https://github.com/guessi/go-shorten-url"
+	fallbackURL         = "https://github.com/guessi/go-shorten-url"
 )
 
 func runTest(t *testing.T, keywords []byte, keyword, expected, userAgent string) {
@@ -24,10 +24,10 @@ func TestSuite1(t *testing.T) {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	runTest(t, keywords, "__fallback_url", fallback_url, userAgentUnsupported)
-	runTest(t, keywords, "__fallback_url", fallback_url, userAgentDefault)
-	runTest(t, keywords, "__fallback_url", fallback_url, userAgentAndroidOS)
-	runTest(t, keywords, "__fallback_url", fallback_url, userAgentIOS)
+	runTest(t, keywords, "__fallbackURL", fallbackURL, userAgentUnsupported)
+	runTest(t, keywords, "__fallbackURL", fallbackURL, userAgentDefault)
+	runTest(t, keywords, "__fallbackURL", fallbackURL, userAgentAndroidOS)
+	runTest(t, keywords, "__fallbackURL", fallbackURL, userAgentIOS)
 }
 
 func TestSuite2(t *testing.T) {
@@ -63,9 +63,9 @@ func TestSuite4(t *testing.T) {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	runTest(t, keywords, "appleonly", fallback_url, userAgentUnsupported)
-	runTest(t, keywords, "appleonly", fallback_url, userAgentDefault)
-	runTest(t, keywords, "appleonly", fallback_url, userAgentAndroidOS)
+	runTest(t, keywords, "appleonly", fallbackURL, userAgentUnsupported)
+	runTest(t, keywords, "appleonly", fallbackURL, userAgentDefault)
+	runTest(t, keywords, "appleonly", fallbackURL, userAgentAndroidOS)
 	runTest(t, keywords, "appleonly", "https://www.apple.com", userAgentIOS)
 }
 
@@ -76,10 +76,10 @@ func TestSuite5(t *testing.T) {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	runTest(t, keywords, "androidonly", fallback_url, userAgentUnsupported)
-	runTest(t, keywords, "androidonly", fallback_url, userAgentDefault)
+	runTest(t, keywords, "androidonly", fallbackURL, userAgentUnsupported)
+	runTest(t, keywords, "androidonly", fallbackURL, userAgentDefault)
 	runTest(t, keywords, "androidonly", "https://source.android.com/", userAgentAndroidOS)
-	runTest(t, keywords, "androidonly", fallback_url, userAgentIOS)
+	runTest(t, keywords, "androidonly", fallbackURL, userAgentIOS)
 }
 
 func TestSuite6(t *testing.T) {
@@ -89,8 +89,8 @@ func TestSuite6(t *testing.T) {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	runTest(t, keywords, "nodefault", fallback_url, userAgentUnsupported)
-	runTest(t, keywords, "nodefault", fallback_url, userAgentDefault)
+	runTest(t, keywords, "nodefault", fallbackURL, userAgentUnsupported)
+	runTest(t, keywords, "nodefault", fallbackURL, userAgentDefault)
 	runTest(t, keywords, "nodefault", "https://source.android.com/", userAgentAndroidOS)
 	runTest(t, keywords, "nodefault", "https://www.apple.com", userAgentIOS)
 }
@@ -115,8 +115,8 @@ func TestSuite8(t *testing.T) {
 		t.Errorf("Failed to open configuration file")
 	}
 
-	runTest(t, keywords, "not-defined", fallback_url, userAgentUnsupported)
-	runTest(t, keywords, "not-defined", fallback_url, userAgentDefault)
-	runTest(t, keywords, "not-defined", fallback_url, userAgentAndroidOS)
-	runTest(t, keywords, "not-defined", fallback_url, userAgentIOS)
+	runTest(t, keywords, "not-defined", fallbackURL, userAgentUnsupported)
+	runTest(t, keywords, "not-defined", fallbackURL, userAgentDefault)
+	runTest(t, keywords, "not-defined", fallbackURL, userAgentAndroidOS)
+	runTest(t, keywords, "not-defined", fallbackURL, userAgentIOS)
 }
