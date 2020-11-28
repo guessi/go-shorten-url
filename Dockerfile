@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine3.12 as BUILDER
+FROM golang:1.15-alpine3.12 as BUILDER
 RUN apk add --no-cache git
 RUN go get -u github.com/guessi/go-shorten-url
 WORKDIR ${GOPATH}/src/github.com/guessi/go-shorten-url
