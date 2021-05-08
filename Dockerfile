@@ -1,11 +1,12 @@
-FROM golang:1.15-alpine3.12 as BUILDER
+FROM golang:1.16-alpine3.13 as BUILDER
 RUN apk add --no-cache git
-RUN go get -u github.com/guessi/go-shorten-url
 WORKDIR ${GOPATH}/src/github.com/guessi/go-shorten-url
-RUN go build
+COPY . .
+RUN CGO_ENABLED=0 go install
 
-FROM alpine:3.12
+FROM scratch
 COPY --from=BUILDER /go/bin/go-shorten-url /opt/
+COPY ./config/redirections.json /opt/config/redirections.json
 WORKDIR /opt/
 VOLUME /opt/config/
 EXPOSE 8080

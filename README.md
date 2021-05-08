@@ -9,8 +9,8 @@ a simple shorten url redirection solution with golang
 
 # Prerequisites
 
-- Docker-CE 17.12+
-- Docker Compose 1.21.0+
+- Docker-CE 19.03+
+- Docker Compose 1.24.0+
 
 
 # Usage
