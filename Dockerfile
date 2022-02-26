@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine3.13 as BUILDER
+FROM public.ecr.aws/docker/library/golang:1.17-alpine3.15 as BUILDER
 RUN apk add --no-cache git
 WORKDIR ${GOPATH}/src/github.com/guessi/go-shorten-url
 COPY . .
