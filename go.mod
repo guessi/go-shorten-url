@@ -1,6 +1,6 @@
 module github.com/guessi/go-shorten-url
 
-go 1.17
+go 1.18
 
 require (
 	github.com/Shaked/gomobiledetect v0.0.0-20171211181707-25f014f66568
@@ -22,10 +22,10 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
-	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
+	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
+	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
@@ -46,10 +46,10 @@ replace (
 	github.com/stretchr/testify => github.com/stretchr/testify v1.7.0
 	github.com/ugorji/go => github.com/ugorji/go v1.2.7
 	github.com/ugorji/go/codec => github.com/ugorji/go/codec v1.2.7
-	golang.org/x/crypto => golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd
-	golang.org/x/sys => golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8
+	golang.org/x/crypto => golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
+	golang.org/x/sys => golang.org/x/sys v0.0.0-20220412211240-33da011f77ad
 	golang.org/x/text => golang.org/x/text v0.3.7
-	google.golang.org/protobuf => google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf => google.golang.org/protobuf v1.28.0
 	gopkg.in/check.v1 => gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 	gopkg.in/yaml.v2 => gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 => gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
