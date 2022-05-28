@@ -9,15 +9,14 @@ a simple shorten url redirection solution with golang
 
 # Prerequisites
 
-- Docker-CE 19.03+
-- Docker Compose 1.24.0+
+- Docker-CE 20.10+
 
 
 # Usage
 
-    $ docker-compose pull # make sure your image is up-to-date
+    $ docker compose pull # make sure your image is up-to-date
 
-    $ docker-compose up [-d]
+    $ docker compose up [-d]
 
     $ curl http://127.0.0.1:8080/example
 
@@ -61,8 +60,7 @@ Why is the redirection rules are static?
 
 # Reference
 
-- [Docker CE](https://www.docker.com/community-edition)
-- [Docker Compose](https://docs.docker.com/compose/overview/)
+- [Docker](https://www.docker.com)
 - [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
 
 
