@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/golang:1.22-alpine3.20 as BUILDER
+FROM public.ecr.aws/docker/library/golang:1.23-alpine3.21 as BUILDER
 RUN apk add --no-cache git
 WORKDIR ${GOPATH}/src/github.com/guessi/go-shorten-url
 COPY *.go go.mod go.sum ./
