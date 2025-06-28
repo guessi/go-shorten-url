@@ -2,7 +2,7 @@ module github.com/guessi/go-shorten-url
 
 go 1.24.0
 
-toolchain go1.24.3
+toolchain go1.24.4
 
 require (
 	github.com/Shaked/gomobiledetect v0.0.0-20171211181707-25f014f66568
